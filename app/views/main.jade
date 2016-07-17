@@ -1,0 +1,187 @@
+extend layout
+
+block navigation
+ div
+      .nav-container-mask
+      .navbar.navbar-default.navbar-fixed-top.topnav(role='navigation')
+        .container-fluid.navbar-fixed-top.topnav-mask
+        .container-fluid
+          #navbar-collapse-1.navbar-collapse.collapse
+            .row
+              .col-md-4.col-sm-4
+                ul.list-inline
+                  li
+                    a(href='#')
+                      img(src='assets/img/United-states-flag-48.png', width='16')
+                  li
+                    a(href='#')
+                      img(src='assets/img/China-flag-48.png', width='16')
+                  li
+                    a(href='#')
+                      img(src='assets/img/Spain-flag-48.png', width='16')
+                  li
+                    a(href='#')
+                      img(src='assets/img/Russia-flag-48.png', width='16')
+              .col-md-8.col-sm-8
+                ul.list-inline.pull-right
+                  li
+                    a(href='https://www.reddit.com/r/dashpay', target='_blank')
+                      img(src='assets/img/1458594973_Reddit.png', width='22')
+                  li
+                    a(href='https://twitter.com/dashpay', target='_blank')
+                      img(src='assets/img/1458594536_43-twitter.png', width='22')
+                  li
+                    a(href='https://www.youtube.com/user/DarkcoinTV')
+                      img(src='assets/img/1458594451_58-youtube.png', width='22')
+                  li
+                    a(href='https://plus.google.com/115080614177201373926', target='_blank')
+                      img(src='assets/img/1458594437_80-google-plus.png', width='22')
+                  li
+                    a(href='https://www.linkedin.com/groups?home=&gid=8179817&trk=groups_most_recent-h-logo&goback=%2Egmp_8179817', target='_blank')
+                      img(src='assets/img/1458595049_LinkedIn.png', width='22')
+                  li
+                    a(href='https://www.facebook.com/dashpay', target='_blank')
+                      img(src='assets/img/1458594420_46-facebook.png', width='22')
+                  li
+                    a(href='https://www.instagram.com/dashpay/', target='_blank')
+                      img(src='assets/img/1458594385_78-instagram.png', width='22')
+                  li
+                    a(href='http://github.com/dashpay', target='_blank')
+                      img(src='assets/img/1458594844_github_rounded.png', width='22')
+            hr.nav-divider
+            .row
+              .col-md-2.col-sm-2
+                a(href='index.html')
+                  img.img-brand(src='assets/img/dash_logo_s.png', width='120')
+              .col-md-10.col-sm-10
+                ul.nav.nav-tabs.collapsed.pull-right
+                  li
+                    a(href='index.html') WHAT IS DASH?
+                  li
+                    a(href='get-dash.html') GET DASH
+                  li
+                    a(href='participate.html') PARTICIPATE 
+                  li.active
+                    a(href='currency.html') CURRENCY 
+                  li
+                    a(href='community.html') COMMUNITY 
+                  li
+                    a(href='news.html') BLOG 
+                  li.dropdown
+                    a.dropdown-toggle(data-toggle='dropdown', aria-expanded='false', href='project.html')
+                      | PROJECT 
+                      span.caret
+                    ul.dropdown-menu(role='menu')
+                      li(role='presentation')
+                        a(href='project.html') Help & Support
+                      li(role='presentation')
+                        a(href='project.html') Philosophy 
+                      li(role='presentation')
+                        a(href='project.html') Technology 
+                      li(role='presentation')
+                        a(href='project.html') Team 
+                      li(role='presentation')
+                        a(href='project.html') Wiki 
+                      li(role='presentation')
+                        a(href='project.html') Foundation 
+                      li(role='presentation')
+                        a(href='project.html') Contact 
+          .navbar-toggle(data-target='#navbar-collapse-1', data-toggle='collapse')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          .navbar-toggle.img-brand-collapsed
+            a(href='index.html')
+              img(src='assets/img/dash_logo_s.png', width='120')
+
+
+div(class="page-main")
+    block content
+
+
+    block footer
+        #site-footer.container-fluid.footer-panel
+            div
+            .row
+                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                p Language 
+                ul.list-inline
+                    li
+                    a(href='#')
+                        img(src='assets/img/United-states-flag-48.png', width='16')
+                    li
+                    a(href='#')
+                        img(src='assets/img/China-flag-48.png', width='16')
+                    li
+                    a(href='#')
+                        img(src='assets/img/Spain-flag-48.png', width='16')
+                    li
+                    a(href='#')
+                        img(src='assets/img/Russia-flag-48.png', width='16')
+                .col-lg-3.col-md-3.col-sm-3.col-xs-6
+                .row
+                    .col-lg-6.col-md-6
+                    div
+                        .bordered-group
+                        a(href='get-dash.html') Download Wallet
+                        a(href='get-dash.html#buy') Buy Dash Currency
+                        a(href='get-dash.html#shop') Shop with Dash
+                        a(href='get-dash.html#shopcard') Dash Debit Card
+                    .col-lg-6.col-md-6
+                    div
+                        .bordered-group
+                        a Start Mining 
+                        a Setup a Masternode
+                        a Setup a Wallet
+                        a Apply for funding
+                .col-lg-3.col-md-3.col-sm-3.col-xs-6
+                .row
+                    .col-lg-6.col-md-6
+                    div
+                        .bordered-group
+                        a(href='currency.html#trade') Exchange Markets
+                        a(href='currency.html#governance') Governance 
+                        a(href='currency.html#blockchain') Block Explorers
+                        a(href='currency.html#network') Network Stats
+                    .col-lg-6.col-md-6
+                    div
+                        .bordered-group
+                        a(href='project.html')  Help & Support
+                        a(href='project.html') Project Information
+                        a(href='project.html')  Team
+                        a(href='project.html') Contact 
+                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+                ul.list-inline.pull-right
+                    li
+                    a(href='https://www.reddit.com/r/dashpay', target='_blank')
+                        img(src='assets/img/1458594973_Reddit.png', width='22')
+                    li
+                    a(href='https://twitter.com/dashpay', target='_blank')
+                        img(src='assets/img/1458594536_43-twitter.png', width='22')
+                    li
+                    a(href='https://www.youtube.com/user/DarkcoinTV')
+                        img(src='assets/img/1458594451_58-youtube.png', width='22')
+                    li
+                    a(href='https://plus.google.com/115080614177201373926', target='_blank')
+                        img(src='assets/img/1458594437_80-google-plus.png', width='22')
+                    li
+                    a(href='https://www.linkedin.com/groups?home=&gid=8179817&trk=groups_most_recent-h-logo&goback=%2Egmp_8179817', target='_blank')
+                        img(src='assets/img/1458595049_LinkedIn.png', width='22')
+                    li
+                    a(href='https://www.facebook.com/dashpay', target='_blank')
+                        img(src='assets/img/1458594420_46-facebook.png', width='22')
+                    li
+                    a(href='https://www.instagram.com/dashpay/', target='_blank')
+                        img(src='assets/img/1458594385_78-instagram.png', width='22')
+                    li
+                    a(href='http://github.com/dashpay', target='_blank')
+                        img(src='assets/img/1458594844_github_rounded.png', width='22')
+            hr.nav-divider
+            .row
+            .col-xs-6
+                a(href='http://dash.org') © 2016 The Dash Network 
+            .col-xs-6
+                a.text-right(href='http://github.com/andyfreer/dash-org-layout', target='_blank') Github Source
+
+

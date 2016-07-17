@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    title= title
+    block css
+      link(rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css")
+      link(rel="stylesheet" href="assets/css/site.css")
+      link(rel="stylesheet" href="assets/css/nav.css")
+      link(rel="stylesheet" href="assets/css/footer.css")
+
+    block js
+      script(src="assets/js/jquery.min.js")
+      script(src="assets/bootstrap//js/bootstrap.min.js")
+      script(src="assets/js/jquery.easing.min.js")
+      script(src="assets/js/scrolling-nav.js")
+   // script(src="bundle.js")
+
+  body
+    block navigation
+    block content
+    block footer

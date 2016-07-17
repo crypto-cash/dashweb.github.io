@@ -1,0 +1,420 @@
+extends main
+
+block content
+  .intro-header
+    .container-fluid
+      .row
+        .col-lg-12
+          .intro-message
+            h1 Dash Currency
+            h3 (transaction visualizer)
+            hr.intro-divider
+            ul.list-inline.intro-social-buttons
+              li
+                a.btn.btn-default.btn-lg.page-scroll(href='#markets')
+                  span.network-name MARKETS 
+              li
+                a.btn.btn-default.btn-lg.page-scroll(href='#governance')
+                  span.network-name GOVERNANCE 
+              li
+                a.btn.btn-default.btn-lg.page-scroll(href='#network')
+                  span.network-name NETWORK 
+              li
+                a.btn.btn-default.btn-lg.page-scroll(href='#blockchain')
+                  span.network-name BLOCKCHAIN
+  #markets.content-section-b
+    .container-fluid.cta-header
+      .cta-message
+        h2  Markets
+      .row
+        .col-md-2
+        .col-md-8
+          .page-panel
+            div
+              ul.nav.nav-tabs
+                li.active
+                  a(href='#tab-1', role='tab', data-toggle='tab') Exchanges
+                li
+                  a(role='tab', data-toggle='tab') Charts 
+                li
+                  a(role='tab', data-toggle='tab') Tools
+              .tab-content
+                #tab-1.tab-pane.active(role='tabpanel')
+                  div
+                    .row
+                      .col-md-6
+                        .table-responsive
+                          table.table
+                            thead
+                              tr
+                                th Average price: 
+                                th  
+                            tbody
+                              tr
+                                td USD 
+                                td #{marketAvg.usdRate} $
+                                td (#{marketAvg.usdPrecent} %) 
+                              tr
+                                td BTC 
+                                td #{marketAvg.btcRate} BTC
+                                td (#{marketAvg.btcPrecent} %) 
+                      .col-md-6
+                        .table-responsive
+                          table.table
+                            thead
+                              tr
+                                th Volume: (24hr)
+                                th  
+                            tbody
+                              tr
+                                td USD 
+                                td #{marketAvg.usdVolume} $
+                                  pan.text-success  (#{marketAvg.usdVolumePrecent} %) 
+                              tr
+                                td BTC 
+                                td #{marketAvg.btcVolume} BTC
+                                  span.text-success  (#{marketAvg.btcVolumePrecent} %) 
+                    .table-responsive
+                      table.table
+                        thead
+                          tr
+                            th # 
+                            th Exchange 
+                            th Coin pair
+                            th Volume (24h)
+                            th Price 
+                            th Volume (%)
+                        tbody
+                          each exchange, index in Exchanges
+                           tr
+                            td= index 
+                            td= exchange.exchangeName
+                            td DASH/#{exchange.currency}
+                            td= exchange.volume 
+                            td= exchange.rate 
+                            td= exchange.ratePercent
+                    nav
+                      ul.pagination
+                        li
+                          a(aria-label='Previous')
+                            span(aria-hidden='true') «
+                        li
+                          a 1
+                        li
+                          a 2
+                        li
+                          a 3
+                        li
+                          a 4
+                        li
+                          a 5
+                        li
+                          a(aria-label='Next')
+                            span(aria-hidden='true') »
+                #tab-2.tab-pane(role='tabpanel')
+                #tab-3.tab-pane(role='tabpanel')
+        .col-md-2
+  #governance.content-section-a
+    .container-fluid.cta-header
+      .cta-message
+        h2 Governance 
+      .row
+        .col-md-2
+        .col-md-8
+          .page-panel
+            div
+              ul.nav.nav-tabs
+                li.active
+                  a(href='#tab-1', role='tab', data-toggle='tab') Proposals 
+                li
+                  a(role='tab', data-toggle='tab') Charts 
+                li
+                  a(role='tab', data-toggle='tab') Tools
+              .tab-content
+                #tab-1.tab-pane.active(role='tabpanel')
+                  div
+                    .cta-message
+                      p.lead.section-lead.text-center Budget Proposals
+                    .table-responsive
+                      table.table
+                        thead
+                          tr
+                            th # 
+                            th Title 
+                            th Owner
+                            th Votes (yes/no)
+                            th Vote %
+                            th Monthly amount
+                        tbody
+                          tr
+                            td 1 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 2 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 3 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 4 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 5 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 6 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 7 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 8 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 9 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                          tr
+                            td 10 
+                            td.text-left
+                              a(href='#') Proposal Title
+                            td.text-left name 
+                            td.text-left 1000 
+                            td.text-left 10% 
+                            td.text-left 1,000 DASH
+                    nav
+                      ul.pagination
+                        li
+                          a(aria-label='Previous')
+                            span(aria-hidden='true') «
+                        li
+                          a 1
+                        li
+                          a 2
+                        li
+                          a 3
+                        li
+                          a 4
+                        li
+                          a 5
+                        li
+                          a(aria-label='Next')
+                            span(aria-hidden='true') »
+                #tab-2.tab-pane(role='tabpanel')
+                #tab-3.tab-pane(role='tabpanel')
+        .col-md-2
+  #network.content-section-b
+    .container-fluid.cta-header
+      .cta-message
+        h2  Network
+      .row
+        .col-md-2
+        .col-md-8
+          .page-panel
+            div
+              ul.nav.nav-tabs
+                li.active
+                  a(href='#tab-1', role='tab', data-toggle='tab') Masternodes
+                li
+                  a(role='tab', data-toggle='tab') Hashrate 
+                li
+                  a(role='tab', data-toggle='tab') Map 
+                li
+                  a(role='tab', data-toggle='tab') Tools
+              .tab-content
+                #tab-1.tab-pane.active(role='tabpanel')
+                  div
+                    .cta-message
+                      p.lead.section-lead.text-center Masternode network
+                      .row
+                        .col-md-12
+                          p.lead.section-caption.text-center (MNCount cart) 
+                          img.img-responsive.customer-img.center-block(src='http://placehold.it/600x300')
+                #tab-2.tab-pane(role='tabpanel')
+                #tab-3.tab-pane(role='tabpanel')
+        .col-md-2
+  #blockchain.content-section-a
+        .container-fluid.cta-header
+          .cta-message
+            h2 Blockchain 
+          .row
+            .col-md-2
+            .col-md-8
+              .page-panel
+                div
+                  ul.nav.nav-tabs
+                    li.active
+                      a(href='#tab-1', role='tab', data-toggle='tab') Block Explorer
+                    li
+                      a(role='tab', data-toggle='tab') Distribution 
+                    li
+                      a(role='tab', data-toggle='tab') Emission 
+                    li
+                      a(role='tab', data-toggle='tab') Tools 
+                  .tab-content
+                    #tab-1.tab-pane.active(role='tabpanel')
+                      div
+                        .well
+                          .input-group
+                            .input-group-addon.hidden
+                              span Addon
+                            input.form-control(type='text', placeholder='Search for an Address, Transactions, Block...')
+                            .input-group-btn
+                              button.btn.btn-default(type='button')
+                                i.glyphicon.glyphicon-search
+                        .table-responsive
+                          table.table
+                            thead
+                              tr
+                                th Block Height
+                                th Age 
+                                th Transactions 
+                                th Value Out
+                                th Difficulty 
+                                th Extracted by
+                            tbody
+                              tr
+                                td.pull-left 1 
+                                td.text-left 2 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 2 
+                                td.text-left 4 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 3 
+                                td.text-left 6 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 4 
+                                td.text-left 8 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 5 
+                                td.text-left 10 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 6 
+                                td.text-left 12 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 7 
+                                td.text-left 14 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 8 
+                                td.text-left 16 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 9 
+                                td.text-left 18 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                              tr
+                                td.pull-left 10 
+                                td.text-left 20 minutes ago
+                                td.text-left 5 
+                                td.text-left 25.0000 DASH
+                                td.text-left 6500 
+                                td.text-left
+                                  a Pool name
+                        nav
+                          ul.pagination
+                            li
+                              a(aria-label='Previous')
+                                span(aria-hidden='true') «
+                            li
+                              a 1
+                            li
+                              a 2
+                            li
+                              a 3
+                            li
+                              a 4
+                            li
+                              a 5
+                            li
+                              a(aria-label='Next')
+                                span(aria-hidden='true') »
+                    #tab-2.tab-pane(role='tabpanel')
+                    #tab-3.tab-pane(role='tabpanel')
+            .col-md-2
