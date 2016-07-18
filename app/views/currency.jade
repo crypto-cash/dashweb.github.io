@@ -93,24 +93,6 @@ block content
                             td= exchange.volume 
                             td= exchange.rate 
                             td= exchange.ratePercent
-                    nav
-                      ul.pagination
-                        li
-                          a(aria-label='Previous')
-                            span(aria-hidden='true') «
-                        li
-                          a 1
-                        li
-                          a 2
-                        li
-                          a 3
-                        li
-                          a 4
-                        li
-                          a 5
-                        li
-                          a(aria-label='Next')
-                            span(aria-hidden='true') »
                 #tab-2.tab-pane(role='tabpanel')
                 #tab-3.tab-pane(role='tabpanel')
         .col-md-2
@@ -134,7 +116,31 @@ block content
                 #tab-1.tab-pane.active(role='tabpanel')
                   div
                     .cta-message
-                      p.lead.section-lead.text-center Budget Proposals
+                      p.lead.section-lead.text-center Budget Information
+                        .col-md-6
+                          .table-responsive
+                            table.table                            
+                              tbody
+                                tr
+                                  td Availibe amount 
+                                  td #{BudgetData.totalAmount} DASH
+                                tr  
+                                  td Alloted amount 
+                                  td #{BudgetData.allotedAmount} DASH 
+                    
+                        .col-md-6
+                          .table-responsive
+                            table.table                            
+                              tbody
+                                tr
+                                  td  Budget due in
+                                  td #{BudgetData.paymentDueDays}
+                                tr
+                                  td  Paymont date
+                                  td #{BudgetData.paymentDate}
+
+                    .cta-message
+                      p.lead.section-lead.text-center Proposals
                     .table-responsive
                       table.table
                         thead
@@ -143,107 +149,19 @@ block content
                             th Title 
                             th Owner
                             th Votes (yes/no)
-                            th Vote %
-                            th Monthly amount
+                            th Will be funded ?
+                            th Amount
                         tbody
-                          tr
-                            td 1 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 2 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 3 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 4 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 5 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 6 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 7 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 8 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 9 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                          tr
-                            td 10 
-                            td.text-left
-                              a(href='#') Proposal Title
-                            td.text-left name 
-                            td.text-left 1000 
-                            td.text-left 10% 
-                            td.text-left 1,000 DASH
-                    nav
-                      ul.pagination
-                        li
-                          a(aria-label='Previous')
-                            span(aria-hidden='true') «
-                        li
-                          a 1
-                        li
-                          a 2
-                        li
-                          a 3
-                        li
-                          a 4
-                        li
-                          a 5
-                        li
-                          a(aria-label='Next')
-                            span(aria-hidden='true') »
+                          each Proposal, index in Proposals
+                            tr
+                              td= index 
+                              td.text-left 
+                                a(href='#{Proposal.Url}') #{Proposal.Title}
+                              td.text-left= Proposal.Owner 
+                              td.text-left #{Proposal.VotesYes}/#{Proposal.VotesNo} 
+                              td.text-left= Proposal.WillBeFunded
+                              td.text-left #{Proposal.Amount} DASH                   
+                           
                 #tab-2.tab-pane(role='tabpanel')
                 #tab-3.tab-pane(role='tabpanel')
         .col-md-2
