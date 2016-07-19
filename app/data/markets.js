@@ -1,7 +1,5 @@
 'use strict';
 let mongoose = require('mongoose'),
-    // debug = require('debug')('currency:markets'),
-    // request = require('request'),
     async = require('async');
 
 let Market = mongoose.model('Exchange');
