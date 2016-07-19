@@ -9,9 +9,9 @@ let sourceSchema = new Schema({
     name:  String,
     url: String,    
     refreshEveryMinutes: Number,
-    updating: Boolean,
+    updating: {type: Boolean,default: false},
 
-    updateDate: { type: Date, default: new Date() }
+    updateDate: Date
 });
 
 sourceSchema.virtual('date')

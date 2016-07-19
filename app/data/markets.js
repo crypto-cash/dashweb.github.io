@@ -15,7 +15,7 @@ const exchangeParams = [
         updating: false
     },
     {
-        exchangeName: 'WorldCoinIndex',
+        exchangeName: 'worldcoinindex',
         key: 'ePSl8tl8dsFhLyReZ6aIwCQNw',
         url: 'https://www.worldcoinindex.com/apiservice/json?key=ePSl8tl8dsFhLyReZ6aIwCQNw',
         updating: false
@@ -191,7 +191,7 @@ function updateCoinMarketCap(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'CoinMarketCap',
+                        exchangeName: 'coinmarketcap',
                         rate: jsonData.price_usd,
                         currency: 'USD',
                         volume: jsonData['24h_volume_usd'],
@@ -204,7 +204,7 @@ function updateCoinMarketCap(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'CoinMarketCap',
+                        exchangeName: 'coinmarketcap',
                         rate: jsonData.price_btc,
                         currency: 'BTC'
                     }, function (err) {
@@ -220,7 +220,7 @@ function updateCoinMarketCap(data, cb) {
         }
     );
 }
-// parse WorldCoinIndex data & save to db
+// parse worldcoinindex data & save to db
 function updateWorldCoinIndex(data, cb) {
     let jsonData = data.Markets.find(function (findDash) {
         return findDash.Name === 'Dash';
@@ -231,7 +231,7 @@ function updateWorldCoinIndex(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'WorldCoinIndex',
+                        exchangeName: 'worldcoinindex',
                         rate: jsonData.Price_usd,
                         currency: 'USD',
                         volume: jsonData['Volume_24h']
@@ -243,7 +243,7 @@ function updateWorldCoinIndex(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'WorldCoinIndex',
+                        exchangeName: 'worldcoinindex',
                         rate: jsonData.Price_eur,
                         currency: 'EUR'
                     }, function (err, ret) {
@@ -254,7 +254,7 @@ function updateWorldCoinIndex(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'WorldCoinIndex',
+                        exchangeName: 'worldcoinindex',
                         rate: jsonData.Price_btc,
                         currency: 'BTC'
                     }, function (err, ret) {
@@ -265,7 +265,7 @@ function updateWorldCoinIndex(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'WorldCoinIndex',
+                        exchangeName: 'worldcoinindex',
                         rate: jsonData.Price_cny,
                         currency: 'CNY'
                     }, function (err, ret) {
@@ -276,7 +276,7 @@ function updateWorldCoinIndex(data, cb) {
             function (callback) {
                 saveMarketData(
                     {
-                        exchangeName: 'WorldCoinIndex',
+                        exchangeName: 'worldcoinindex',
                         rate: jsonData.Price_gbp,
                         currency: 'GBP'
                     }, function (err, ret) {
@@ -287,7 +287,7 @@ function updateWorldCoinIndex(data, cb) {
         function (err) {
             if (err) {cb(err); }
             else {
-                cb(null, 'WorldCoinIndex data is updated and saved.');
+                cb(null, 'worldcoinindex data is updated and saved.');
             }
         }
     );
@@ -295,7 +295,7 @@ function updateWorldCoinIndex(data, cb) {
 
 function save(exchangeName, data, cb) {
     // Parse
-    switch (exchangeName) {
+    switch (exchangeName.split('market.')[1]) {
         case 'coinmarketcap':
             updateCoinMarketCap(data, function (err, ret) {
                 cb(err, ret);
@@ -307,21 +307,21 @@ function save(exchangeName, data, cb) {
             });
             break;
         default:
-            cb('ERROR cannot parse data from ' + exchangeName + ' don\'t now that exhange', null);
+            cb('ERROR cannot parse data from ' + exchangeName.split('market.')[1] + ' don\'t now that exhange', null);
             break;
     }
 }
 
-function readFromDb(exchangeName, cb) {
+function readDb(exchangeName, cb) {
     // every exchange can have multple record (each coin pair is a record)
-    Market.find({ exchangeName: exchangeName },
+    Market.find({ exchangeName: exchangeName.split('market.')[1]},
         function (err, marketData) {
             if (err) {
-                cb('ERROR reading ' + exchangeName + ' from db: ' + err, null);
+                cb('ERROR reading ' + exchangeName.split('market.')[1] + ' from db: ' + err, null);
             } else {
                 cb(null, marketData);
             }
         });
 }
 
-module.exports = { readFromDb, save };
+module.exports = { readDb, save };

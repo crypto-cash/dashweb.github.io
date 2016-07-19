@@ -23,7 +23,12 @@ models.forEach(function (model) {
 var getData = require('./data/readData');
 var debug=require('debug')('currency:test');
 
-getData.read('blockchain',(err,result)=>{
+// getData.read('market.WorldCoinIndex',(err,result)=>{
+//     if (err) {debug('------ ' + err); }
+//     else{debug('++++ ' + result);}
+// });
+
+getData.readAll('market',(err,result)=>{
     if (err) {debug('------ ' + err); }
     else{debug('++++ ' + result);}
 });
