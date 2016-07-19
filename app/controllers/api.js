@@ -1,10 +1,10 @@
 'use strict';
-var express = require('express'),
+let express = require('express'),
     router = express.Router();
 
-var markets = require('../data/markets');
-var budgets = require('../data/budgets');
-var blockchain = require('../data/blockchain');
+let markets = require('../data/markets');
+let budgets = require('../data/budgets');
+let blockchain = require('../data/blockchain');
 
 router.get('/api',(req,res) => {
     res.render('apiHelp');

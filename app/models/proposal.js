@@ -1,10 +1,10 @@
 // Proposal propusal model
 'use strict';
 
-var mongoose = require('mongoose'),
+let mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var ProposalSchema = new Schema({
+let ProposalSchema = new Schema({
     Hash: String,
     Title: String,
     Url: String,

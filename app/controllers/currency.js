@@ -1,17 +1,17 @@
 'use strict';
-var express = require('express'),
+let express = require('express'),
     router = express.Router(),
     debug = require('debug')('currency:markets'),
     async = require('async');
 
-// var Exchanges = mongoose.model('Exchange');
-var markets = require('../data/markets');
-var budgets = require('../data/budgets');
-var blockchain = require('../data/blockchain');
+// let Exchanges = mongoose.model('Exchange');
+let markets = require('../data/markets');
+let budgets = require('../data/budgets');
+let blockchain = require('../data/blockchain');
 
 // show data for exchanges on currency page
 router.get('/', function (req, res) {
-    var marketData, marketAvg, BPdata, blockChainData;
+    let marketData, marketAvg, BPdata, blockChainData;
     async.parallel(
         [
             // get market data
