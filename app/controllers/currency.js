@@ -1,22 +1,20 @@
 'use strict';
-var express = require('express'),
+let express = require('express'),
     router = express.Router(),
-    debug = require('debug')('currency:markets'),
+//    debug = require('debug')('currency:markets'),
     async = require('async');
 
-// var Exchanges = mongoose.model('Exchange');
-var markets = require('../data/markets');
-var budgets = require('../data/budgets');
-var blockchain = require('../data/blockchain');
+
+let readData = require('../data/readData');
 
 // show data for exchanges on currency page
 router.get('/', function (req, res) {
-    var marketData, marketAvg, BPdata, blockChainData;
+    let marketData, marketAvg, BPdata, blockChainData;
     async.parallel(
         [
             // get market data
             function (callback) {
-                markets.readAll(function (err, data) {
+                readData.readAll('market',function (err, data) {
                     if (err) { res.send('MARKETS: ' + err); }
                     else {
                         // TODO: calaculate averages 
@@ -37,7 +35,7 @@ router.get('/', function (req, res) {
             },
             // get Budget & propusal data
             function (callback) {
-                budgets.read(function (err, data) {
+                readData.read('budgets', function (err, data) {
                     if (err) { res.send('BUDGETS: ' + err); }
                     else {
                         BPdata = data;
@@ -47,7 +45,7 @@ router.get('/', function (req, res) {
             },
             // get blockchain data
             function (callback) {
-                blockchain.read(function (err, data) {
+                readData.read('blockchain', function (err, data) {
                     if (err) { res.rend('BLOCKCHAIN: ' + err); }
                     else {
                         blockChainData = data;

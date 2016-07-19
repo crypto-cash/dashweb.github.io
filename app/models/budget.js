@@ -2,10 +2,10 @@
 // Budget propusal model
 'use strict';
 
-var mongoose = require('mongoose'),
+let mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var BudgetSchema = new Schema({
+let BudgetSchema = new Schema({
     totalAmount: { type: Number, default: 0 },
     allotedAmount: { type: Number, default: 0 },
 

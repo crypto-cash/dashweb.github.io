@@ -1,17 +1,18 @@
-var express = require('express');
-var glob = require('glob');
+'use strict';
+let express = require('express');
+let glob = require('glob');
 
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var compress = require('compression');
-var methodOverride = require('method-override');
+let favicon = require('serve-favicon');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let compress = require('compression');
+let methodOverride = require('method-override');
 
 module.exports = function(app, config) {
-  var env = process.env.NODE_ENV || 'development';
+  let env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
-  app.locals.ENV_DEVELOPMENT = env == 'development';
+  app.locals.ENV_DEVELOPMENT = env === 'development';
   
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'jade');
@@ -27,13 +28,13 @@ module.exports = function(app, config) {
   app.use('/assets',express.static(config.root + '/assets'));
   app.use(methodOverride());
 
-  var controllers = glob.sync(config.root + '/app/controllers/*.js');
+  let controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
   });
 
   app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    let err = new Error('Not Found');
     err.status = 404;
     next(err);
   });

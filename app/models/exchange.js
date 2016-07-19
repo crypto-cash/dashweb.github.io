@@ -1,10 +1,10 @@
 // Exchange model
 'use strict';
 
-var mongoose = require('mongoose'),
+let mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
-var ExchangeSchema = new Schema({
+let ExchangeSchema = new Schema({
   exchangeName: String,
   currency: String,
   rate: Number,
