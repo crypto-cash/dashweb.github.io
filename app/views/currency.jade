@@ -1,201 +1,201 @@
 extends main
 
 block content
-  .intro-header
-    .container-fluid
-      .row
-        .col-lg-12
-          .intro-message
-            h1 Dash Currency
-            h3 (transaction visualizer)
-            hr.intro-divider
-            ul.list-inline.intro-social-buttons
-              li
-                a.btn.btn-default.btn-lg.page-scroll(href='#markets')
-                  span.network-name MARKETS 
-              li
-                a.btn.btn-default.btn-lg.page-scroll(href='#governance')
-                  span.network-name GOVERNANCE 
-              li
-                a.btn.btn-default.btn-lg.page-scroll(href='#network')
-                  span.network-name NETWORK 
-              li
-                a.btn.btn-default.btn-lg.page-scroll(href='#blockchain')
-                  span.network-name BLOCKCHAIN
-  #markets.content-section-b
-    .container-fluid.cta-header
-      .cta-message
-        h2  Markets
-      .row
-        .col-md-2
-        .col-md-8
-          .page-panel
-            div
-              ul.nav.nav-tabs
-                li.active
-                  a(href='#tab-1', role='tab', data-toggle='tab') Exchanges
-                li
-                  a(role='tab', data-toggle='tab') Charts 
-                li
-                  a(role='tab', data-toggle='tab') Tools
-              .tab-content
-                #tab-1.tab-pane.active(role='tabpanel')
-                  div
-                    .row
-                      .col-md-6
+      .intro-header
+        .container-fluid
+          .row
+            .col-lg-12
+              .intro-message
+                h1 Dash Currency
+                h3 (transaction visualizer)
+                hr.intro-divider
+                ul.list-inline.intro-social-buttons
+                  li
+                    a.btn.btn-default.btn-lg.page-scroll(href='#markets')
+                      span.network-name MARKETS 
+                  li
+                    a.btn.btn-default.btn-lg.page-scroll(href='#governance')
+                      span.network-name GOVERNANCE 
+                  li
+                    a.btn.btn-default.btn-lg.page-scroll(href='#network')
+                      span.network-name NETWORK 
+                  li
+                    a.btn.btn-default.btn-lg.page-scroll(href='#blockchain')
+                      span.network-name BLOCKCHAIN
+      #markets.content-section-b
+        .container-fluid.cta-header
+          .cta-message
+            h2  Markets
+          .row
+            .col-md-2
+            .col-md-8
+              .page-panel
+                div
+                  ul.nav.nav-tabs
+                    li.active
+                      a(href='#tab-1', role='tab', data-toggle='tab') Exchanges
+                    li
+                      a(role='tab', data-toggle='tab') Charts 
+                    li
+                      a(role='tab', data-toggle='tab') Tools
+                  .tab-content
+                    #tab-1.tab-pane.active(role='tabpanel')
+                      div
+                        .row
+                          .col-md-6
+                            .table-responsive
+                              table.table
+                                thead
+                                  tr
+                                    th Average price: 
+                                    th  
+                                tbody
+                                  tr
+                                    td USD 
+                                    td #{marketAvg.usdRate} $
+                                    td (#{marketAvg.usdPrecent} %) 
+                                  tr
+                                    td BTC 
+                                    td #{marketAvg.btcRate} BTC
+                                    td (#{marketAvg.btcPrecent} %) 
+                          .col-md-6
+                            .table-responsive
+                              table.table
+                                thead
+                                  tr
+                                    th Volume: (24hr)
+                                    th  
+                                tbody
+                                  tr
+                                    td USD 
+                                    td #{marketAvg.usdVolume} $
+                                      pan.text-success  (#{marketAvg.usdVolumePrecent} %) 
+                                  tr
+                                    td BTC 
+                                    td #{marketAvg.btcVolume} BTC
+                                      span.text-success  (#{marketAvg.btcVolumePrecent} %) 
                         .table-responsive
                           table.table
                             thead
                               tr
-                                th Average price: 
-                                th  
+                                th # 
+                                th Exchange 
+                                th Coin pair
+                                th Volume (24h)
+                                th Price 
+                                th Volume (%)
                             tbody
-                              tr
-                                td USD 
-                                td #{marketAvg.usdRate} $
-                                td (#{marketAvg.usdPrecent} %) 
-                              tr
-                                td BTC 
-                                td #{marketAvg.btcRate} BTC
-                                td (#{marketAvg.btcPrecent} %) 
-                      .col-md-6
-                        .table-responsive
-                          table.table
-                            thead
-                              tr
-                                th Volume: (24hr)
-                                th  
-                            tbody
-                              tr
-                                td USD 
-                                td #{marketAvg.usdVolume} $
-                                  pan.text-success  (#{marketAvg.usdVolumePrecent} %) 
-                              tr
-                                td BTC 
-                                td #{marketAvg.btcVolume} BTC
-                                  span.text-success  (#{marketAvg.btcVolumePrecent} %) 
-                    .table-responsive
-                      table.table
-                        thead
-                          tr
-                            th # 
-                            th Exchange 
-                            th Coin pair
-                            th Volume (24h)
-                            th Price 
-                            th Volume (%)
-                        tbody
-                          each exchange, index in Exchanges
-                           tr
-                            td= index 
-                            td= exchange.exchangeName
-                            td DASH/#{exchange.currency}
-                            td= exchange.volume 
-                            td= exchange.rate 
-                            td= exchange.ratePercent
-                #tab-2.tab-pane(role='tabpanel')
-                #tab-3.tab-pane(role='tabpanel')
-        .col-md-2
-  #governance.content-section-a
-    .container-fluid.cta-header
-      .cta-message
-        h2 Governance 
-      .row
-        .col-md-2
-        .col-md-8
-          .page-panel
-            div
-              ul.nav.nav-tabs
-                li.active
-                  a(href='#tab-1', role='tab', data-toggle='tab') Proposals 
-                li
-                  a(role='tab', data-toggle='tab') Charts 
-                li
-                  a(role='tab', data-toggle='tab') Tools
-              .tab-content
-                #tab-1.tab-pane.active(role='tabpanel')
-                  div
-                    .cta-message
-                      p.lead.section-lead.text-center Budget Information
-                        .col-md-6
-                          .table-responsive
-                            table.table                            
-                              tbody
+                              each exchange, index in Exchanges
                                 tr
-                                  td Availibe amount 
-                                  td #{BudgetData.totalAmount} DASH
-                                tr  
-                                  td Alloted amount 
-                                  td #{BudgetData.allotedAmount} DASH 
-                    
-                        .col-md-6
-                          .table-responsive
-                            table.table                            
-                              tbody
-                                tr
-                                  td  Budget due in
-                                  td #{BudgetData.paymentDueDays}
-                                tr
-                                  td  Paymont date
-                                  td #{BudgetData.paymentDate}
+                                  td= index 
+                                  td= exchange.exchangeName
+                                  td DASH/#{exchange.currency}
+                                  td= exchange.volume 
+                                  td= exchange.rate 
+                                  td= exchange.ratePercent
+                    #tab-2.tab-pane(role='tabpanel')
+                    #tab-3.tab-pane(role='tabpanel')
+            .col-md-2
+      #governance.content-section-a
+        .container-fluid.cta-header
+          .cta-message
+            h2 Governance 
+          .row
+            .col-md-2
+            .col-md-8
+              .page-panel
+                div
+                  ul.nav.nav-tabs
+                    li.active
+                      a(href='#tab-1', role='tab', data-toggle='tab') Proposals 
+                    li
+                      a(role='tab', data-toggle='tab') Charts 
+                    li
+                      a(role='tab', data-toggle='tab') Tools
+                  .tab-content
+                    #tab-1.tab-pane.active(role='tabpanel')
+                      div
+                        .cta-message
+                          p.lead.section-lead.text-center Budget Information
+                            .col-md-6
+                              .table-responsive
+                                table.table                            
+                                  tbody
+                                    tr
+                                      td Availibe amount 
+                                      td #{BudgetData.totalAmount} DASH
+                                    tr  
+                                      td Alloted amount 
+                                      td #{BudgetData.allotedAmount} DASH 
+                        
+                            .col-md-6
+                              .table-responsive
+                                table.table                            
+                                  tbody
+                                    tr
+                                      td  Budget due in
+                                      td #{BudgetData.paymentDueDays}
+                                    tr
+                                      td  Paymont date
+                                      td #{BudgetData.paymentDate}
 
-                    .cta-message
-                      p.lead.section-lead.text-center Proposals
-                    .table-responsive
-                      table.table
-                        thead
-                          tr
-                            th # 
-                            th Title 
-                            th Owner
-                            th Votes (yes/no)
-                            th Will be funded ?
-                            th Amount
-                        tbody
-                          each Proposal, index in Proposals
-                            tr
-                              td= index 
-                              td.text-left 
-                                a(href='#{Proposal.Url}') #{Proposal.Title}
-                              td.text-left= Proposal.Owner 
-                              td.text-left #{Proposal.VotesYes}/#{Proposal.VotesNo} 
-                              td.text-left= Proposal.WillBeFunded
-                              td.text-left #{Proposal.Amount} DASH                   
-                           
-                #tab-2.tab-pane(role='tabpanel')
-                #tab-3.tab-pane(role='tabpanel')
-        .col-md-2
-  #network.content-section-b
-    .container-fluid.cta-header
-      .cta-message
-        h2  Network
-      .row
-        .col-md-2
-        .col-md-8
-          .page-panel
-            div
-              ul.nav.nav-tabs
-                li.active
-                  a(href='#tab-1', role='tab', data-toggle='tab') Masternodes
-                li
-                  a(role='tab', data-toggle='tab') Hashrate 
-                li
-                  a(role='tab', data-toggle='tab') Map 
-                li
-                  a(role='tab', data-toggle='tab') Tools
-              .tab-content
-                #tab-1.tab-pane.active(role='tabpanel')
-                  div
-                    .cta-message
-                      p.lead.section-lead.text-center Masternode network
-                      .row
-                        .col-md-12
-                          p.lead.section-caption.text-center (MNCount cart) 
-                          img.img-responsive.customer-img.center-block(src='http://placehold.it/600x300')
-                #tab-2.tab-pane(role='tabpanel')
-                #tab-3.tab-pane(role='tabpanel')
-        .col-md-2
-  #blockchain.content-section-a
+                        .cta-message
+                          p.lead.section-lead.text-center Proposals
+                        .table-responsive
+                          table.table
+                            thead
+                              tr
+                                th # 
+                                th Title 
+                                th Owner
+                                th Votes (yes/no)
+                                th Will be funded ?
+                                th Amount
+                            tbody
+                              each Proposal, index in Proposals
+                                tr
+                                  td= index 
+                                  td.text-left 
+                                    a(href='#{Proposal.Url}') #{Proposal.Title}
+                                  td.text-left= Proposal.Owner 
+                                  td.text-left #{Proposal.VotesYes}/#{Proposal.VotesNo} 
+                                  td.text-left= Proposal.WillBeFunded
+                                  td.text-left #{Proposal.Amount} DASH                   
+                              
+                    #tab-2.tab-pane(role='tabpanel')
+                    #tab-3.tab-pane(role='tabpanel')
+            .col-md-2
+      #network.content-section-b
+        .container-fluid.cta-header
+          .cta-message
+            h2  Network
+          .row
+            .col-md-2
+            .col-md-8
+              .page-panel
+                div
+                  ul.nav.nav-tabs
+                    li.active
+                      a(href='#tab-1', role='tab', data-toggle='tab') Masternodes
+                    li
+                      a(role='tab', data-toggle='tab') Hashrate 
+                    li
+                      a(role='tab', data-toggle='tab') Map 
+                    li
+                      a(role='tab', data-toggle='tab') Tools
+                  .tab-content
+                    #tab-1.tab-pane.active(role='tabpanel')
+                      div
+                        .cta-message
+                          p.lead.section-lead.text-center Masternode network
+                          .row
+                            .col-md-12
+                              p.lead.section-caption.text-center (MNCount cart) 
+                              img.img-responsive.customer-img.center-block(src='http://placehold.it/600x300')
+                    #tab-2.tab-pane(role='tabpanel')
+                    #tab-3.tab-pane(role='tabpanel')
+            .col-md-2
+      #blockchain.content-section-a
         .container-fluid.cta-header
           .cta-message
             h2 Blockchain 

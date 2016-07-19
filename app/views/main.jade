@@ -1,9 +1,8 @@
 extend layout
 
 block navigation
- div
-      .nav-container-mask
-      .navbar.navbar-default.navbar-fixed-top.topnav(role='navigation')
+  .nav-container-mask
+    .navbar.navbar-default.navbar-fixed-top.topnav(role='navigation')
         .container-fluid.navbar-fixed-top.topnav-mask
         .container-fluid
           #navbar-collapse-1.navbar-collapse.collapse
@@ -96,15 +95,14 @@ block navigation
               img(src='assets/img/dash_logo_s.png', width='120')
 
 
-div(class="page-main")
+  div(class="page-main")
     block content
 
-
     block footer
-        #site-footer.container-fluid.footer-panel
-            div
-            .row
-                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+      #site-footer.container-fluid.footer-panel
+          div
+          .row
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
                 p Language 
                 ul.list-inline
                     li
@@ -119,7 +117,7 @@ div(class="page-main")
                     li
                     a(href='#')
                         img(src='assets/img/Russia-flag-48.png', width='16')
-                .col-lg-3.col-md-3.col-sm-3.col-xs-6
+              .col-lg-3.col-md-3.col-sm-3.col-xs-6
                 .row
                     .col-lg-6.col-md-6
                     div
@@ -135,7 +133,7 @@ div(class="page-main")
                         a Setup a Masternode
                         a Setup a Wallet
                         a Apply for funding
-                .col-lg-3.col-md-3.col-sm-3.col-xs-6
+              .col-lg-3.col-md-3.col-sm-3.col-xs-6
                 .row
                     .col-lg-6.col-md-6
                     div
@@ -151,7 +149,7 @@ div(class="page-main")
                         a(href='project.html') Project Information
                         a(href='project.html')  Team
                         a(href='project.html') Contact 
-                .col-lg-3.col-md-3.col-sm-3.col-xs-12
+              .col-lg-3.col-md-3.col-sm-3.col-xs-12
                 ul.list-inline.pull-right
                     li
                     a(href='https://www.reddit.com/r/dashpay', target='_blank')
@@ -177,11 +175,9 @@ div(class="page-main")
                     li
                     a(href='http://github.com/dashpay', target='_blank')
                         img(src='assets/img/1458594844_github_rounded.png', width='22')
-            hr.nav-divider
-            .row
+          hr.nav-divider
+          .row
             .col-xs-6
                 a(href='http://dash.org') © 2016 The Dash Network 
             .col-xs-6
                 a.text-right(href='http://github.com/andyfreer/dash-org-layout', target='_blank') Github Source
-
-
