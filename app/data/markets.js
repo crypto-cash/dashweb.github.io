@@ -78,7 +78,7 @@ function updateCoinMarketCap(data, cb) {
 // parse WorldCoinIndex data & save to db
 function updateWorldCoinIndex(data, cb) {
     var jsonData = data.Markets.find(function (findDash) {
-        return findDash.Name === "Dash";
+        return findDash.Name === 'Dash';
     });
     var error, returnData;
     async.parallel(

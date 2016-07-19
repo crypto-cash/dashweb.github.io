@@ -10,7 +10,7 @@ var budgets = require('../data/budgets');
 
 
 // show data for exchanges on currency page
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     var marketData, marketAvg, BPdata;
     async.parallel(
         [
@@ -55,37 +55,13 @@ router.get('/', function (req, res, next) {
             }
         }
     );
-});
-            // var output = '<h2>BUDGET</h2>';
-            // var BudgetData = data[0];
-            // output += 'budget amount: ' + BudgetData.totalAmount + '</br>';
-            // output += 'budget allotted: ' + BudgetData.allotedAmount + '</br>';
-            // output += 'paymont date : ' + BudgetData.paymentDate + '</br>';
-            // output += 'paymont due days: ' + BudgetData.paymentDueDays + '</br>';
-
-            // output += '<h2>PROPOSALS</h2>'
-            // var ProposalsData = data[1];
-            // ProposalsData.forEach(function (proposal) {
-            //     output += 'Proposal title: ' + proposal.Title + '</br>';
-            //     output += 'Owner: ' + proposal.Owner + '</br>';
-            //     output += 'Votes (yes/no): ' + proposal.VotesYes + '/' + proposal.VotesNO + '</br>';
-            //     // output += 'Votes % :' + proposal.VotePercent);
-            //     output += 'Will be funded :' + proposal.WillBeFunded + '</br>';
-            //     output += 'Amount :' + proposal.Amount + ' Dash' + '</br>';
-            //     //  output += 'Update time: ' + Proposal.updateDate.toString());
-            //     output += '<br><br>';
-            // }, this);
-
-            // res.send(output);
+});          
 
 // test page
 router.get('/test', function (req, res, next) {
-    var WorldCoinParams = exchangeParams.find(function (f) { return f.exchangeName === 'worldcoinindex'; });
-
-    updateMarketInfo(WorldCoinParams, function (err, ret) {
-        debug(err, ret);
-    });
+    
 });
+
 
 module.exports = function (app) {
     app.use('/', router);
