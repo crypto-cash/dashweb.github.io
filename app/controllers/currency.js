@@ -7,17 +7,17 @@ var express = require('express'),
 // var Exchanges = mongoose.model('Exchange');
 var markets = require('../data/markets');
 var budgets = require('../data/budgets');
-
+var blockchain = require('../data/blockchain');
 
 // show data for exchanges on currency page
 router.get('/', function (req, res) {
-    var marketData, marketAvg, BPdata;
+    var marketData, marketAvg, BPdata, blockChainData;
     async.parallel(
         [
             // get market data
             function (callback) {
                 markets.readAll(function (err, data) {
-                    if (err) { debug('MARKETS: ' + err); }
+                    if (err) { res.send('MARKETS: ' + err); }
                     else {
                         // TODO: calaculate averages 
                         marketAvg = {
@@ -38,9 +38,19 @@ router.get('/', function (req, res) {
             // get Budget & propusal data
             function (callback) {
                 budgets.read(function (err, data) {
-                    if (err) { debug('BUDGETS: ' + err); }
+                    if (err) { res.send('BUDGETS: ' + err); }
                     else {
                         BPdata = data;
+                        callback();
+                    }
+                });
+            },
+            // get blockchain data
+            function (callback) {
+                blockchain.read(function (err, data) {
+                    if (err) { res.rend('BLOCKCHAIN: ' + err); }
+                    else {
+                        blockChainData = data;
                         callback();
                     }
                 });
@@ -49,17 +59,22 @@ router.get('/', function (req, res) {
         // all tasks are done
         function (err) {
             if (marketData && marketAvg && BPdata && !err) {
-                res.render('currency', { Exchanges: marketData, marketAvg: marketAvg, BudgetData: BPdata[0], Proposals: BPdata[1] });
+                res.render('currency',
+                    {
+                        Exchanges: marketData, marketAvg: marketAvg,
+                        BudgetData: BPdata[0], Proposals: BPdata[1],
+                        Blockchain: blockChainData
+                    });
             } else {
                 res.send('Didn\'t get all the data I needed ' + err);
             }
         }
     );
-});          
+});
 
 // test page
 router.get('/test', function (req, res, next) {
-    
+
 });
 
 

@@ -233,88 +233,16 @@ block content
                                 th Transactions 
                                 th Value Out
                                 th Difficulty 
-                                th Extracted by
+                                
                             tbody
-                              tr
-                                td.pull-left 1 
-                                td.text-left 2 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 2 
-                                td.text-left 4 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 3 
-                                td.text-left 6 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 4 
-                                td.text-left 8 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 5 
-                                td.text-left 10 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 6 
-                                td.text-left 12 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 7 
-                                td.text-left 14 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 8 
-                                td.text-left 16 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 9 
-                                td.text-left 18 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
-                              tr
-                                td.pull-left 10 
-                                td.text-left 20 minutes ago
-                                td.text-left 5 
-                                td.text-left 25.0000 DASH
-                                td.text-left 6500 
-                                td.text-left
-                                  a Pool name
+                              each Block in Blockchain
+                                tr
+                                  td.text-left= Block.height                              
+                                  td.text-left= Block.time 
+                                  td.text-left= Block.txlength
+                                  td.text-left #{Block.cbvalue} DASH      
+                                  td.text-left= Block.difficulty
+                             
                         nav
                           ul.pagination
                             li
