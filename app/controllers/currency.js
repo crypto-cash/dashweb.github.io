@@ -1,13 +1,9 @@
 'use strict';
 let express = require('express'),
     router = express.Router(),
-    debug = require('debug')('currency:markets'),
+//    debug = require('debug')('currency:markets'),
     async = require('async');
 
-// let Exchanges = mongoose.model('Exchange');
-// let markets = require('../data/markets');
-// let budgets = require('../data/budgets');
-// let blockchain = require('../data/blockchain');
 
 let readData = require('../data/readData');
 

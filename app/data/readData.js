@@ -20,6 +20,7 @@ function init(cb) {
         url: 'https://insight.dash.siampm.com/api/blocks?limit=10',
         refreshEveryMinutes: 2.5
     };
+    // TODO: apply for partner api key with dashwhale    https://www.dashwhale.org/dbin#partner
     let budgetSource = {
         name: 'budgets',
         url: 'https://www.dashwhale.org/api/v1/budget',
@@ -77,37 +78,6 @@ function init(cb) {
             cb(err);
         }
     );
-
-
-    /*
-       //MARKETS
-       // TODO: globals are bad ?
-       const timeout = 15; // data is stall after X minutes
-       const exchangeParams = [
-           {
-               exchangeName: 'CoinMarketCap',
-               url: 'https://api.coinmarketcap.com/v1/ticker/dash',
-               updating: false
-           },
-           {
-               exchangeName: 'WorldCoinIndex',
-               key: 'ePSl8tl8dsFhLyReZ6aIwCQNw',
-               url: 'https://www.worldcoinindex.com/apiservice/json?key=ePSl8tl8dsFhLyReZ6aIwCQNw',
-               updating: false
-           }
-       ];
-       
-       // BUDGETS
-       // TODO: apply for partner api key with dashwhale
-       // https://www.dashwhale.org/dbin#partner
-       // const url = 'https://www.dashwhale.org/api/v1/budget';
-       // const timeout = 30; // minutes
-       
-       // BLOCKCHAIN
-       // const url = 'https://insight.dash.siampm.com/api/blocks?limit=10';
-       // const timeout = 2.5; // minutes
-       
-    */
 }
 
 // update the updateDate 
@@ -121,6 +91,8 @@ function updateLastUpdateDate(name) {
 }
 // update now from external api
 function updateNow(source, cb) {
+      // TODO: add  updating locking ?
+
     if (!source.url) {
         cb('ERROR not url know for ' + source.name + ', cannot update it.');
         return;
