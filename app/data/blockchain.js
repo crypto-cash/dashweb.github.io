@@ -37,9 +37,7 @@ function save(data, cb) {
     // async save each block
     async.forEach(data.blocks,
         function (block, callback) {
-            saveBlockchainData(block, function (err) {
-                callback(err);
-            });
+            saveBlockchainData(block,  err => { callback(err);});
         },
         // if all blocks are saved..
         function (err) {
@@ -50,9 +48,7 @@ function save(data, cb) {
 }
 
 function readDb(cb) {
-    Blockchain.find((err, data) => {
-        cb(err, data);
-    });
+    Blockchain.find((err, data) => cb(err, data));
 }
 
 module.exports = { readDb, save };

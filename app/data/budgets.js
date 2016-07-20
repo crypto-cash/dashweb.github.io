@@ -52,7 +52,7 @@ function saveBudgetData(data, cb) {
             paymentDueDays: data.payment_date_human,
             paymentDate: data.payment_date,
             superblock: data.superblock,
-         //   updateDate: new Date()
+            //   updateDate: new Date()
         },
         { // insert new, update existing
             upsert: true
@@ -70,7 +70,7 @@ function saveBudgetData(data, cb) {
 
 // save budget & proposals data to db
 function save(data, cb) {
-       // TODO: add locking ?
+    // TODO: add locking ?
 
     //  parse budget json data 
     let budgetData = data.budget;
@@ -82,19 +82,9 @@ function save(data, cb) {
         // array of tasks
         [
             // save budget data to db
-            function (callback) {
-                saveBudgetData(budgetData, function (err) {
-                    // debug(err, resp);
-                    callback(err); // so async knows this task is done
-                });
-            },
+            callback => { saveBudgetData(budgetData, err => { callback(err); }); },
             //  save proposals data to db
-            function (callback) {
-                saveProposalsData(proposalData, function (err) {
-                    //    debug(err, resp);
-                    callback(err); // so async knows this task is done
-                });
-            }
+            callback => { saveProposalsData(proposalData, err => { callback(err); }); }
         ],
         //  callback when all tasts are done
         function (err) {
@@ -105,11 +95,11 @@ function save(data, cb) {
 }
 
 function readDb(cb) {
-    Budgets.findOne(function (err, BudgetData) {
+    Budgets.findOne((err, BudgetData) => {
         if (err) {
             cb('ERROR reading budget from db: ' + err, null);
         } else {
-            Proposals.find(function (err, ProposalsData) {
+            Proposals.find((err, ProposalsData) => {
                 if (err) {
                     cb('ERROR reading proposals from db: ' + err, null);
                     return;

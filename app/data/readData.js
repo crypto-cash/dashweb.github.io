@@ -4,11 +4,12 @@ let mongoose = require('mongoose'),
     request = require('request'),
     async = require('async');
 
-let source = mongoose.model('Source');
 
-let markets = require('./markets');
-let blockchain = require('./blockchain');
-let budgets = require('./budgets');
+let Source = mongoose.model('Source');
+
+let Markets = require('./markets');
+let Blockchain = require('./blockchain');
+let Budgets = require('./budgets');
 
 let initDone = false;
 
@@ -39,69 +40,85 @@ function init(cb) {
 
     async.parallel(
         [
-            (callback) => {
-                source.findOneAndUpdate(
+            callback => {
+                Source.findOneAndUpdate(
                     { name: blockchainSource.name },
                     blockchainSource,
                     { upsert: true },
-                    (err) => { debug(err ? err : 'blockchainSource ok'); callback(err); }
+                    err => { debug(err ? err : 'blockchainSource ok'); callback(err); }
                 );
             },
-            (callback) => {
-                source.findOneAndUpdate(
+            callback => {
+                Source.findOneAndUpdate(
                     { name: budgetSource.name },
                     budgetSource,
                     { upsert: true },
-                    (err) => { debug(err ? err : 'budgetSource ok'); callback(err); }
+                    err => { debug(err ? err : 'budgetSource ok'); callback(err); }
                 );
             },
-            (callback) => {
-                source.findOneAndUpdate(
+            callback => {
+                Source.findOneAndUpdate(
                     { name: coinMarketCapSource.name },
                     coinMarketCapSource,
                     { upsert: true },
-                    (err) => { debug(err ? err : 'coinMarketCapSource ok'); callback(err); }
+                    err => { debug(err ? err : 'coinMarketCapSource ok'); callback(err); }
                 );
             },
-            (callback) => {
+            callback => {
 
-                source.findOneAndUpdate(
+                Source.findOneAndUpdate(
                     { name: worldCoinIndexSource.name },
                     worldCoinIndexSource,
                     { upsert: true },
-                    (err) => { debug(err ? err : 'worldCoinIndexSource ok'); callback(err); }
+                    err => { debug(err ? err : 'worldCoinIndexSource ok'); callback(err); }
                 );
             }
         ],
-        (err) => {
-            debug('INIT DONE');
-            cb(err);
-        }
+        err => { debug('INIT DONE'); cb(err); }
     );
 }
 
+function checkAlreadyUpdating(sourceData) {
+    Source.findOne({ name: sourceData.name }, (err, souceData) => {
+        if (err) { debug('ERROR cannot find sourceData for ' + sourceData.name); return true; }
+        return souceData.updating;
+    });
+}
+function updateLock(sourceData, set, cb) {
+    Source.update(
+        { name: sourceData.name },
+        { $set: { updating: true } },
+        err => {
+            if (err) {
+                throw new Error('ERROR: cannot set updating lock for ' + sourceData.name + ' to: ' + set);
+            }
+        });
+}
 // update the updateDate 
 function updateLastUpdateDate(name) {
-    source.update(
+    Source.update(
         { name: name },
         { $set: { updateDate: new Date() } },
-        (err) => {
+        err => {
             if (err) { debug('ERROR cannot update date for ' + name + '\n' + err); }
         });
 }
 // update now from external api
-function updateNow(source, cb) {
-      // TODO: add  updating locking ?
+function updateNow(sourceData, cb) {
 
-    if (!source.url) {
-        cb('ERROR not url know for ' + source.name + ', cannot update it.');
-        return;
-    }
+    if (!sourceData.url) { cb('ERROR not url know for ' + sourceData.name + ', cannot update it.'); return; }
+
+    // prevent multiple updates at same time
+    if (checkAlreadyUpdating(sourceData)) { cb('Already updating ' + sourceData.name); return; }
+    // set updating lock now
+    updateLock(sourceData, true);
+
     // get json data
     let jsonData;
-    request.get(source.url, function (err, response, body) {
+    request.get(sourceData.url, function (err, response, body) {
         if (err) {
-            cb('ERROR: not getting data for ' + source.name + ' at ' + source.url + ' : ' + err);
+            updateLock(sourceData, false);
+            cb('ERROR: not getting data for ' + sourceData.name + ' at ' + sourceData.url + ' : ' + err);
             return;
         }
         //  parse blockchain json data 
@@ -109,62 +126,65 @@ function updateNow(source, cb) {
             jsonData = JSON.parse(body);
         }
         catch (ex) {
-            cb('ERROR parsing json for ' + source.name + ': ' + ex + '\nData = ' + body, null);
+            updateLock(sourceData, false);
+            cb('ERROR parsing json for ' + sourceData.name + ': ' + ex + '\nData = ' + body, null);
             return;
         }
         // parse & save data
-        switch (source.name.toLowerCase()) {
+        switch (sourceData.name.toLowerCase()) {
             // all exchange markets
             case 'budgets':
-                budgets.save(jsonData, (err, result) => {
-                    if (!err) { updateLastUpdateDate(source.name); }
+                Budgets.save(jsonData, (err, result) => {
+                    // update succesfull = set new updateDate
+                    if (!err) { updateLastUpdateDate(sourceData.name); }
+                    updateLock(sourceData, false);
                     cb(err, result);
                 });
                 break;
             case 'blockchain':
-                blockchain.save(jsonData, (err, result) => {
-                    if (!err) { updateLastUpdateDate(source.name); }
+                Blockchain.save(jsonData, (err, result) => {
+                    // update succesfull = set new updateDate
+                    if (!err) { updateLastUpdateDate(sourceData.name); }
+                    updateLock(sourceData, false);
                     cb(err, result);
                 });
                 break;
 
             default:
                 // cannot use regulair expresion in case, fallthrought to default and check it here
-                if (source.name.toLowerCase().startsWith('market.')) {
-                    markets.save(source.name.toLowerCase(), jsonData, (err, result) => {
-                        if (!err) { updateLastUpdateDate(source.name); }
+                if (sourceData.name.toLowerCase().startsWith('market.')) {
+                    Markets.save(sourceData.name.toLowerCase(), jsonData, (err, result) => {
+                        // update succesfull = set new updateDate
+                        if (!err) { updateLastUpdateDate(sourceData.name); }
+                        updateLock(sourceData, false);
                         cb(err, result);
                     });
                     break;
                 } else {
-                    cb('ERROR don\'t know how to parse data for ' + source.name);
+                    updateLock(sourceData, false);
+                    cb('ERROR don\'t know how to parse data for ' + sourceData.name);
                     return;
                 }
         }
     });
 }
 // read from db
-function readFromDb(source, cb) {
-    switch (source.name.toLowerCase()) {
+function readFromDb(sourceData, cb) {
+    switch (sourceData.name.toLowerCase()) {
         case 'budgets':
-            budgets.readDb((err, result) => {
-                cb(err, result);
-            });
+            Budgets.readDb((err, result) => { cb(err, result); });
             break;
         case 'blockchain':
-            blockchain.readDb((err, result) => {
-                cb(err, result);
-            });
+            Blockchain.readDb((err, result) => { cb(err, result); });
             break;
 
         default:
             // cannot use regulair expresion in case, fallthrought to default and check it here
-            if (source.name.toLowerCase().startsWith('market.')) {
-                markets.readDb(source.name.toLowerCase(), (err, result) => {
-                    cb(err, result);
-                });
+            if (sourceData.name.toLowerCase().startsWith('market.')) {
+                Markets.readDb(sourceData.name.toLowerCase(),
+                    (err, result) => { cb(err, result); });
             } else {
-                cb('ERROR don\'t know how to read data for ' + source.name);
+                cb('ERROR don\'t know how to read data for ' + sourceData.name);
                 return;
             }
     }
@@ -182,7 +202,7 @@ function read(sourceName, cb) {
     }
 
     // get information of source data
-    source.findOne({ name: sourceName }, (err, sourceData) => {
+    Source.findOne({ name: sourceName }, (err, sourceData) => {
         if (err) {
             cb('ERROR reading source sourceData ' + sourceName + ' : ' + err);
             return;
@@ -200,9 +220,8 @@ function read(sourceName, cb) {
                 if (err) { cb(err); }
                 else {// update was succesfull, read results from db
                     debug(response);
-                    readFromDb(sourceData, (err, data) => {
-                        cb(err, data);
-                    });
+                    readFromDb(sourceData,
+                        (err, data) => { cb(err, data); });
                 }
             });
 
@@ -227,9 +246,8 @@ function read(sourceName, cb) {
                 });
             } else {
                 debug(sourceName + ' data is still up to date.');
-                readFromDb(sourceData, (err, data) => {
-                    cb(err, data);
-                });
+                readFromDb(sourceData,
+                    (err, data) => { cb(err, data); });
             }
         }
     });
@@ -249,7 +267,7 @@ function readAll(multiple, cb) {
     }
     // get all multiple, not just one
     var regExp = new RegExp('^' + multiple + '.');
-    source.find({ name: { $regex: regExp }}, (err, multipleSourceData) => {
+    Source.find({ name: { $regex: regExp } }, (err, multipleSourceData) => {
         if (err) {
             cb('ERROR cannot read db: ' + err);
             return;
@@ -262,7 +280,7 @@ function readAll(multiple, cb) {
         async.forEach(multipleSourceData,
             function (sourceName, callback) {
                 read(sourceName.name, (err, result) => {
-                    resultData=resultData.concat(result);
+                    resultData = resultData.concat(result);
                     callback(err, result);
                 });
             },
@@ -274,4 +292,4 @@ function readAll(multiple, cb) {
     });
 }
 
-module.exports = { read, readAll};
+module.exports = { read, readAll };
