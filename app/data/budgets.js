@@ -70,8 +70,6 @@ function saveBudgetData(data, cb) {
 
 // save budget & proposals data to db
 function save(data, cb) {
-    // TODO: add locking ?
-
     //  parse budget json data 
     let budgetData = data.budget;
     // parse proposal json data

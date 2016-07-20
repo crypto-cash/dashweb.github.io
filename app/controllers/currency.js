@@ -9,7 +9,7 @@ let readData = require('../data/readData');
 
 // show data for exchanges on currency page
 router.get('/', function (req, res) {
-    let marketData, marketAvg, BPdata, blockChainData;
+    let marketData, marketAvg, BPdata, blockChainData,masternodeData;
     async.parallel(
         [
             // get market data
@@ -52,6 +52,16 @@ router.get('/', function (req, res) {
                         callback();
                     }
                 });
+            },
+                     // get masternode data
+            function (callback) {
+                readData.read('masternodes', function (err, data) {
+                    if (err) { res.rend('MASTERNODES: ' + err); }
+                    else {
+                        masternodeData = data;
+                        callback();
+                    }
+                });
             }
         ],
         // all tasks are done
@@ -61,7 +71,8 @@ router.get('/', function (req, res) {
                     {
                         Exchanges: marketData, marketAvg: marketAvg,
                         BudgetData: BPdata[0], Proposals: BPdata[1],
-                        Blockchain: blockChainData
+                        Blockchain: blockChainData,
+                        MasternodeData : masternodeData
                     });
             } else {
                 res.send('Didn\'t get all the data I needed ' + err);

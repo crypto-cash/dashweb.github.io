@@ -15,7 +15,7 @@ let blockchainSchema = new Schema({
     difficulty: Number,
     cbvalue: Number,
     
-    updateDate: { type: Date, default: new Date() }
+  //  updateDate: { type: Date, default: new Date() }
 });
 
 blockchainSchema.virtual('date')

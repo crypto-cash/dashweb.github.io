@@ -10,6 +10,7 @@ let Source = mongoose.model('Source');
 let Markets = require('./markets');
 let Blockchain = require('./blockchain');
 let Budgets = require('./budgets');
+let Masternodes = require('./masternodes');
 
 let initDone = false;
 
@@ -37,9 +38,22 @@ function init(cb) {
         url: 'https://www.worldcoinindex.com/apiservice/json?key=ePSl8tl8dsFhLyReZ6aIwCQNw',
         refreshEveryMinutes: 15
     };
+    let masternodeSource = {
+        name: 'masternodes',
+        url: 'https://dashninja.pl/api/masternodes/stats',
+        refreshEveryMinutes: 30
+    };
 
     async.parallel(
         [
+            callback => {
+                Source.findOneAndUpdate(
+                    { name: masternodeSource.name },
+                    masternodeSource,
+                    { upsert: true },
+                    err => { debug(err ? err : 'masternodeSource ok'); callback(err); }
+                );
+            },
             callback => {
                 Source.findOneAndUpdate(
                     { name: blockchainSource.name },
@@ -65,7 +79,6 @@ function init(cb) {
                 );
             },
             callback => {
-
                 Source.findOneAndUpdate(
                     { name: worldCoinIndexSource.name },
                     worldCoinIndexSource,
@@ -84,7 +97,7 @@ function checkAlreadyUpdating(sourceData) {
         return souceData.updating;
     });
 }
-function updateLock(sourceData, set, cb) {
+function updateLock(sourceData, set) {
     Source.update(
         { name: sourceData.name },
         { $set: { updating: true } },
@@ -132,7 +145,7 @@ function updateNow(sourceData, cb) {
         }
         // parse & save data
         switch (sourceData.name.toLowerCase()) {
-            // all exchange markets
+
             case 'budgets':
                 Budgets.save(jsonData, (err, result) => {
                     // update succesfull = set new updateDate
@@ -141,6 +154,7 @@ function updateNow(sourceData, cb) {
                     cb(err, result);
                 });
                 break;
+
             case 'blockchain':
                 Blockchain.save(jsonData, (err, result) => {
                     // update succesfull = set new updateDate
@@ -149,6 +163,16 @@ function updateNow(sourceData, cb) {
                     cb(err, result);
                 });
                 break;
+
+            case 'masternodes':
+                Masternodes.save(jsonData, (err, result) => {
+                    // update succesfull = set new updateDate
+                    if (!err) { updateLastUpdateDate(sourceData.name); }
+                    updateLock(sourceData, false);
+                    cb(err, result);
+                });
+                break;
+
 
             default:
                 // cannot use regulair expresion in case, fallthrought to default and check it here
@@ -177,7 +201,9 @@ function readFromDb(sourceData, cb) {
         case 'blockchain':
             Blockchain.readDb((err, result) => { cb(err, result); });
             break;
-
+        case 'masternodes':
+            Masternodes.readDb((err, result) => { cb(err, result); });
+            break;
         default:
             // cannot use regulair expresion in case, fallthrought to default and check it here
             if (sourceData.name.toLowerCase().startsWith('market.')) {
@@ -190,7 +216,7 @@ function readFromDb(sourceData, cb) {
     }
 }
 
-
+// PUBLIC //
 // if data is still valid return it from db, else update it via external api call
 function read(sourceName, cb) {
     if (!initDone) {

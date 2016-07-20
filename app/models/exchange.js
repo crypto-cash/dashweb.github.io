@@ -11,7 +11,8 @@ let ExchangeSchema = new Schema({
   ratePercent: {type :Number, default: 0},
   volume: {type :Number, default: 0},
   volumePercent: {type :Number, default: 0},
-  updateDate: Date
+ 
+ // updateDate: Date
 });
 
 ExchangeSchema.virtual('date')

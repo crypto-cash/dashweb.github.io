@@ -35,6 +35,15 @@ router.get('/api/blockchain', function (req, res) {
     });
 });
 
+router.get('/api/masternodes', function (req, res) {
+    readData.read('masternodes', (err, data)=> {
+        if (err) { res.send('MASTERNODES: ' + err); }
+        else {
+           res.render('api',{api:JSON.stringify(data)});
+        }
+    });
+});
+
 module.exports = function (app) {
     app.use('/', router);
 };

@@ -14,7 +14,7 @@ let BudgetSchema = new Schema({
 
     superblock: Number,
     
-    updateDate: { type: Date, default: new Date() }
+//    updateDate: { type: Date, default: new Date() }
 });
 
 BudgetSchema.virtual('date')

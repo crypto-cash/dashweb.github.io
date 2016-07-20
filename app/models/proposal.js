@@ -14,7 +14,8 @@ let ProposalSchema = new Schema({
    // VotePercent: { type: Number, default: 0 },
     WillBeFunded : Boolean,
     Amount: { type: Number, default: 0 },
-    updateDate: { type: Date, default: new Date() }
+ 
+ //   updateDate: { type: Date, default: new Date() }
 });
 
 ProposalSchema.virtual('date')
